@@ -5,7 +5,7 @@ import java.util.List;
 import com.github.pagehelper.PageInfo;
 
 /**
- * 
+ * 可缓存接口定义
  * @updateBy zhanghaiting
  * @date: 2019年9月20日
  * @param <T>
