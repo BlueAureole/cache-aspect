@@ -59,6 +59,7 @@
     		ArticleDao,CacheAbleDao<ArticleModel> {
     
     	@Override
+	//只有主键的表，使用默认配置即可（无需指定外键）
     	public CacheConfigModel getCacheConfig() {
     		if(null==this.cacheConfig) {
     	    	CacheConfigModel cacheConfigModel=new CacheConfigModel(cacheObjectKey,genericityClazz);
@@ -76,7 +77,7 @@
     //DaoImpl需要实现CacheAbleDao接口。
     public class ContributionDaoImpl extends BaseDaoImpl<ContributionModel>
     		implements ContributionDao,CacheAbleDao<ContributionModel> {
-      
+       //有外键的表，可以指定外键
     	private final String conceptId="conceptId";//此为外键1
     	private final String explorerId="explorerId";//此为外键2
     
@@ -84,7 +85,7 @@
     	public CacheConfigModel getCacheConfig() {
     		if(null==this.cacheConfig) {
     	    	CacheConfigModel cacheConfigModel=new CacheConfigModel(cacheObjectKey,genericityClazz);
-    
+			//对方法指定可能使用到的外键（实际外键允许为空，为空则清空全部缓存）
     			cacheConfigModel.setForeignKeyArray(new String[] {conceptId,explorerId});
     			cacheConfigModel.putKeysInfo("selectByForeign", cacheConfigModel.new KeysInfo(new String[] {conceptId,explorerId}));//该查询使用了外键1和2
     			cacheConfigModel.putKeysInfo("selectInFkList", cacheConfigModel.new KeysInfo(new String[] {conceptId}));//该查询使用了外键1
